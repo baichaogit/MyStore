@@ -1,0 +1,103 @@
+{% extends 'index.html' %}
+
+
+
+{% block head %}
+<head>
+<title>Pet Food</title>
+
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+		function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- //for-mobile-apps -->
+<link href="/static/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/static/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<!-- font-awesome icons -->
+<link href="/static/css/font-awesome.css" rel="stylesheet" type="text/css" media="all" /> 
+<!-- //font-awesome icons -->
+<!-- js -->
+<script src="/static/js/jquery-1.11.1.min.js"></script>
+<!-- //js -->
+<link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+<!-- start-smoth-scrolling -->
+<script type="text/javascript" src="/static/js/move-top.js"></script>
+<script type="text/javascript" src="/static/js/easing.js"></script>
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$(".scroll").click(function(event){
+			event.preventDefault();
+			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+		});
+	});
+</script>
+<!-- start-smoth-scrolling -->
+</head>
+{% endblock %}
+
+
+    {% block yemian %}
+    <li>单品详情</li>
+    {% endblock %}
+
+
+
+    {% block main %}
+
+    <!------广告宣传大图--------->
+		<div class="w3l_banner_nav_right">
+
+			<div class="w3l_banner_nav_right_banner9 w3l_banner_nav_right_banner_pet">
+				<h4>这里是一张广告大图</h4>
+				<p>Sint occaecat cupidatat non proident</p>
+				<a href="single.html">Shop Now</a>
+			</div>
+
+			<div class="w3ls_w3l_banner_nav_right_grid w3ls_w3l_banner_nav_right_grid_sub">
+				<h3 class="w3l_fruit">品牌详情页</h3>
+
+				<div class="w3ls_w3l_banner_nav_right_grid1 w3ls_w3l_banner_nav_right_grid1_veg">
+            <!-------------------->
+                    {% for good in goods %}
+					<div class="col-md-3 w3ls_w3l_banner_left w3ls_w3l_banner_left_asdfdfd"
+                         style="margin-bottom: 20px ">
+						<div class="hover14 column">
+						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid" >
+							<div class="agile_top_brand_left_grid_pos">
+								<img src="/static/images/offer.png" alt=" " class="img-responsive" />
+							</div>
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block">
+										<div class="snipcart-thumb">
+											<a href="{% url 'good:single' good.id %}"><img src="/{{ good.image }}" alt=" " class="img-responsive" /></a>
+											<p>{{ good.name }}</p>
+											<h4>¥ {{ good.price }} <span></span></h4>
+										</div>
+										<div class="snipcart-details">
+											<button class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="57" data-name="Can - tuna for cats" data-summary="summary 57" data-price="8.00" data-quantity="1" data-image="images/57.png">Add to Cart</button>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+						</div>
+					</div>
+                    {% endfor %}
+            <!-------------------->
+
+					<div class="clearfix"> </div>
+				</div>
+			</div>
+		</div>
+    {% endblock %}
+
+
+
+
+
+
+
