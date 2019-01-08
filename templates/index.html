@@ -295,14 +295,21 @@
 							<div class="agile_top_brand_left_grid1">
 								<figure>
 									<div class="snipcart-item block">
+
 										<div class="snipcart-thumb">
 											<a href="{% url 'good:single' good.goods %}"><img src="/{{ good.goods__spu_img }}" alt=" " class="img-responsive" /></a>
+
+                                            <h4><span style="display: inline">&nbsp;&nbsp;{{ good.goods__name }}</span>
+                                                ¥ {{ good.minprice }}</h4>
+{#                                            <p style="display: inline">{{ good.goods__name }}</p><p style="display: inline">  222</p>>#}
+										</div>
+
+                                        <div class="snipcart-thumb">
+{#											<a href="{% url 'good:single' good.goods %}"><img src="/{{ good.goods__spu_img }}" alt=" " class="img-responsive" /></a>#}
 											<p>{{ good.goods__name }}</p>
 											<h4>¥ {{ good.minprice }} /起<span>$5.00</span></h4>
 										</div>
-										<div class="snipcart-details">
-											<button class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="5" data-name="Knorr instant soup" data-summary="summary 5" data-price="3.00" data-quantity="1" data-image="images/5.png">Add to Cart</button>
-										</div>
+
 									</div>
 								</figure>
 							</div>
@@ -373,8 +380,8 @@
 									<div class="snipcart-item block">
 										<div class="snipcart-thumb">
 											<a href="{% url 'good:single' good.goods %} "><img src="/{{ good.goods__spu_img }}" alt=" " class="img-responsive" /></a>
-											<p>{{ good.goods__name }}</p>
-											<h4>¥ {{ good.minprice }} /起 <span>$4.00</span></h4>
+											<p style="margin: 0 auto">{{ good.goods__name }}</p>
+											<h4>¥ {{ good.minprice }} /起<span style="text-decoration: none"></span></h4>
 										</div>
 										<div class="snipcart-details">
 											<button class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="13" data-name="Mixed fruit juice" data-summary="summary 13" data-price="3.00" data-quantity="1" data-image="images/13.png">Add to Cart</button>

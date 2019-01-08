@@ -2094,11 +2094,12 @@ ul.wmuSliderPagination {
     color: #212121;
     line-height: 1.5em;
     text-transform: uppercase;
-    margin-bottom: 2em;
+	margin-left: 15.5em;
+    margin-bottom: 0.5em;
 }
 .agileinfo_single_left {
-    padding: 2em;
-    box-shadow: 0px 0px 5px #E1E1E1;
+    padding: 1em;
+    box-shadow: 0px 0px 10px gray;
 }
 /*-- Ratings --*/
 .rating1 {

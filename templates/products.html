@@ -73,9 +73,9 @@
 								<figure>
 									<div class="snipcart-item block">
 										<div class="snipcart-thumb">
-											<a href="{% url 'good:single' good.id %}"><img src="/{{ good.image }}" alt=" " class="img-responsive" /></a>
-											<p>{{ good.name }}</p>
-											<h4>¥ {{ good.price }} <span></span></h4>
+											<a href="{% url 'good:single' good.goods %}"><img src="/{{ good.goods__spu_img }}" alt=" " class="img-responsive" /></a>
+                                            <p>{{ good.goods__name }}</p>
+											<h4>¥ {{ good.minprice }} /起<span style="text-decoration: none"></span></h4>
 										</div>
 										<div class="snipcart-details">
 											<button class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="57" data-name="Can - tuna for cats" data-summary="summary 57" data-price="8.00" data-quantity="1" data-image="images/57.png">Add to Cart</button>

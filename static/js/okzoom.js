@@ -102,18 +102,18 @@ $(function($){
         }(base)));
       }
       else {
-        $(base.el).bind('mouseover', (function(b) {
-          return function(e) { $.fn.okzoom.build(b, e); };
-        }(base)));
+        // $(base.el).bind('mouseover', (function(b) {
+        //   return function(e) { $.fn.okzoom.build(b, e); };
+        // }(base)));
 
-        base.$listener.bind('mousemove', (function(b) {
-          return function(e) { $.fn.okzoom.mousemove(b, e); };
-        }(base)));
+        // base.$listener.bind('mousemove', (function(b) {
+        //   return function(e) { $.fn.okzoom.mousemove(b, e); };
+        // }(base)));
 
-        base.$listener.bind('mouseout', (function(b) {
-          return function(e) { $.fn.okzoom.mouseout(b, e); };
-        }(base)));
-      }
+      //   base.$listener.bind('mouseout', (function(b) {
+      //     return function(e) { $.fn.okzoom.mouseout(b, e); };
+      //   }(base)));
+      // }
 
       base.options.height = base.options.height || base.options.width;
 

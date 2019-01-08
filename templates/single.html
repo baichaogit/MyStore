@@ -74,9 +74,9 @@
 
       <!---------单品 详情介绍--------------------->
         <div class="agileinfo_single" style="margin-top: 0px">
-                    <h5>charminar pulao basmati rice 5 kg</h5>
-                    <div class="col-md-4 agileinfo_single_left">
-                        <img id="example" src="/static/images/76.png" alt=" " class="img-responsive" />
+                    <h5>{{ goods_name }}</h5>
+                    <div class="col-md-4 agileinfo_single_left" style="height: 23em">
+                        <img id="example" src="/{{ goods_img }}" alt=" " class="img-responsive" style="width: 22em" />
                     </div>
                     <div class="col-md-8 agileinfo_single_right">
                         <div class="rating1">
@@ -95,37 +95,29 @@
                         </div>
                         <div class="w3agile_description" style="margin-bottom: 0px">
                             <h4>产品描述 :</h4>
-                            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                                officia deserunt mollit anim id est laborum.Duis aute irure dolor in
-                                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                pariatur.</p>
+                            <p> {{ goods_detail | safe }}</p>
                         </div>
                 <!----------------- 产品信息 -------------------->
-                        <div class="snipcart-item block" style="margin-top: 10px">
+                        {% for sku in good_sku %}
+                        <div class="snipcart-item block" style="margin-top: 10px ; font-size: 1.2em">
                             <div class="snipcart-thumb agileinfo_single_right_snipcart" style="display: inline">
-                                <h4 style="display: inline">$21.00
-                                    <span style="text-decoration: none">内存 6+64G </span>
-                                    <span style="text-decoration: none">库存: 10台</span>
+
+                                <h4 style="display: inline; color: #122b40">{{ sku.name }}
+                                    <span style="text-decoration: none"></span>
                                 </h4>
+
+                                <h4 style="display: inline ;color: #d43f3a">¥ {{ sku.price }}
+                                    <span style="text-decoration: none"></span>
+                                </h4>
+
                             </div>
-                            <div class="snipcart-details agileinfo_single_right_details" style="display: inline-block">
-                                <button class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="76" data-name="Pulao basmati rice" data-summary="summary 76" data-price="21.00" data-quantity="1" data-image="images/76.png"  >Add to Cart</button>
+                            <div class="snipcart-details agileinfo_single_right_details" style="display: inline-block; width: 200px;">
+                                <button class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="76"
+                                        data-name="Pulao basmati rice" data-summary="summary 76" data-price="21.00"
+                                        data-quantity="1" data-image="images/76.png" >购买 {{ sku.get_neicun_display }}版</button>
                             </div>
                         </div>
-
-
-                        <div class="snipcart-item block" style="margin-top: 10px">
-                            <div class="snipcart-thumb agileinfo_single_right_snipcart" style="display: inline">
-                                <h4 style="display: inline">$21.00
-                                    <span style="text-decoration: none">内存 6+64G </span>
-                                    <span style="text-decoration: none">库存: 10台</span>
-                                </h4>
-                            </div>
-                            <div class="snipcart-details agileinfo_single_right_details" style="display: inline-block">
-                                <button class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="76" data-name="Pulao basmati rice" data-summary="summary 76" data-price="21.00" data-quantity="1" data-image="images/76.png"  >Add to Cart</button>
-                            </div>
-                        </div>
-
+                         {% endfor %}
 
 
                     </div>
@@ -174,6 +166,7 @@
 								<img src="/static/images/offer.png" alt=" " class="img-responsive" />
 							</div>
 							<div class="agile_top_brand_left_grid1">
+
 								<figure>
 									<div class="snipcart-item block">
 										<div class="snipcart-thumb">
@@ -187,6 +180,7 @@
 									</div>
 								</figure>
 							</div>
+
 						</div>
 						</div>
 					</div>
@@ -474,6 +468,7 @@ $(document).ready(function(){
 								
 			});
 	</script>
+
 <!-- //here ends scrolling icon -->
 <script type='text/javascript' src="/static/js/jquery.mycart.js"></script>
 <script type="text/javascript">

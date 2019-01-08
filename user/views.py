@@ -34,17 +34,16 @@ def index_views(request):
     # print('-----',t)
 
     # 随机推荐(高端机) 4台
-    # goods_gao = random.sample(list(GoodSKU.objects.filter(price__gt=7000)),4)
-    goods_gao = random.sample(list(GoodSKU.objects.values('goods').annotate(minprice=Min('price')).values('goods','goods__name','minprice','goods__spu_img').filter(minprice__gt=5500)),2)
+    goods_gao = random.sample(list(GoodSKU.objects.values('goods').annotate(minprice=Min('price')).values('goods','goods__name','minprice','goods__spu_img').filter(minprice__gt=5000)),4)
 
     # 随机推荐 (中端机) 4台
-    goods_zhong = random.sample(list(GoodSKU.objects.values('goods').annotate(minprice=Min('price')).values('goods','goods__name','minprice','goods__spu_img').filter(minprice__range=[3000,5500])),4)
+    goods_zhong = random.sample(list(GoodSKU.objects.values('goods').annotate(minprice=Min('price')).values('goods','goods__name','minprice','goods__spu_img').filter(minprice__range=[3000,4999])),4)
 
     # 随机推荐(低端机) 4台
     goods_di = random.sample(list(GoodSKU.objects.values('goods').annotate(minprice=Min('price')).values('goods', 'goods__name', 'minprice','goods__spu_img').filter(minprice__lt=3000)), 1)
 
 
-    # 从request.session中获取登陆信息
+    # 从request.session中获取登陆信息 判断用户是否登录????
     if 'user_id' in request.session and 'user_name' in request.session:
         id = request.session.get('user_id')
         user = UserInfo.objects.filter(id=id).first()
@@ -57,7 +56,6 @@ def index_views(request):
             'goods_gao':goods_gao,
             'goods_zhong':goods_zhong,
             'goods_di':goods_di,
-
         }
 
 # 如果用户没有登录
@@ -84,7 +82,14 @@ def index_views(request):
 
 # 个人中心
 def personal_views(request):
-    return render(request,'user_center_info.html')
+    # 从request.session中获取登陆信息 判断用户是否登录????
+    if 'user_id' in request.session and 'user_name' in request.session:
+        id = request.session.get('user_id')
+        user = UserInfo.objects.filter(id=id).first()
+
+        return render(request,'user_center_info.html')
+    else:
+        return render(request, 'login.html', {"msg": "请登陆后 再进入用户中心"})
 
 
 

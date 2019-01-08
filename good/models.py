@@ -49,6 +49,8 @@ class GoodSKU(models.Model):
     def __str__(self):
         return self.name
 
+
+
     class Meta:
         db_table = 'good_sku'
         verbose_name = '商品'
