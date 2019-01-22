@@ -9,7 +9,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>(●—●)登录</title>
+	<title>(●—●)欢迎登录</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
@@ -29,13 +29,11 @@
 	<meta name="twitter:card" content="" />
 
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-	<link rel="shortcut icon" href="/static/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/static/brand_img/index.png" />
 
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
 	
-{#	<link rel="stylesheet" href="css/666bootstrap.min.css">#}
-{#	<link rel="stylesheet" href="css/666animate.css">#}
-{#	<link rel="stylesheet" href="css/666style.css">#}
+
 
 	<link rel="stylesheet" href="/static/css/666bootstrap.min.css">
         <link rel="stylesheet" href="/static/css/666animate.css">
@@ -62,6 +60,10 @@
 
 
 	</head>
+
+
+
+
 	<body>
 
 
@@ -88,26 +90,37 @@
                             {% if msg %}
                                 <span style="color: #d43f3a">{{ msg }}</span>
                             {% endif %}
+
 						<div class="form-group">
 							<label for="username" class="sr-only">用户名</label>
 							<input type="text" class="form-control" id="username" placeholder="用户名" name="uname">
 						</div>
+
 						<div class="form-group">
 							<label for="password" class="sr-only">密码</label>
 							<input type="password" class="form-control" id="password" placeholder="密码" name="upwd">
 						</div>
+
+                    <!--------------验 证 码------------->
 						<div class="form-group">
-{#							<label for="remember"><input type="checkbox" id="remember" name="isSave">记住密码</label>#}
-						</div>
+                            <input type="text" class="form-control" id="verifycode" placeholder="验证码" name="verifycode">
+                            <img src="{% url 'user:verifycode' %}" id="codeImg"> 
+                            <input type="button" style="color: #d43f3a" id="changeCode" value="刷新">
+						
+                        </div>
+
 						<div class="form-group">
 							<p><span >没有账号 ? &nbsp; | &nbsp;&nbsp;</span>
-								<a href="{% url 'user:register' %}" style="color:deepskyblue">去注册</a>
+								<a href="{% url 'user:register' %}" style="color:deepskyblue">去注册</a> | &nbsp;&nbsp;
+                                <a href="{% url 'user:index' %}" style="color:deepskyblue"> 先不登录</a>
 								 <!-- <a href="forgot.html">Forgot Password?</a> -->
 							</p>
 						</div>
+
 						<div class="form-group">
 							<input type="submit" value="登  录" class="btn btn-primary">
 						</div>
+
 					</form>
 					<!-- END Sign In Form -->
 
@@ -136,4 +149,15 @@
 
 	</body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
 

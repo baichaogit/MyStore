@@ -101,7 +101,7 @@ $(function($){
           };
         }(base)));
       }
-      else {
+      // else {
         // $(base.el).bind('mouseover', (function(b) {
         //   return function(e) { $.fn.okzoom.build(b, e); };
         // }(base)));

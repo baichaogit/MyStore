@@ -24,7 +24,7 @@ html,body{height:100%}
 .login_info em{color:#ff8800}
 
 .login_btn a,.user_link a{
-	color:#666;
+	color:wheat;
 }
 
 .login_btn a:hover,.user_link a:hover{

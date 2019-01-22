@@ -7,6 +7,9 @@ from .views import *
 
 urlpatterns = [
     url(r'^cart/$',cart_views,name='cart'),
-    url(r'^pay/$',pay_views,name='pay')
-
+    url(r'^order/$',order_views,name='order'),
+    url(r'^add_cart/$',add_cart_views,name='add_cart'),
+    url(r'^update/$',cart_update_views,name='update',),
 ]
+
+

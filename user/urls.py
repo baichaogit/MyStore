@@ -11,4 +11,6 @@ urlpatterns = [
     url(r'^login/$',login_views,name='login'),
     url(r'^logout/$',logout_views,name='logout'),
     url(r'^personal/$',personal_views,name='personal'),
+    url(r'verifycode/$',verifycode, name='verifycode'),
+    url(r'^changecode/$',changecode_views, name='changeCode')
 ]

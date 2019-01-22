@@ -5,7 +5,7 @@
 
 {% block head %}
 <head>
-<title>首页</title>
+<title>(●—●)首页</title>
 <!-- for-mobile-apps -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -16,6 +16,8 @@
 <link href="/static/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <link href="/static/css/style.css" rel="stylesheet" type="text/css" media="all" />
 <!-- font-awesome icons -->
+        <link rel="icon" type="image/x-icon" href="/static/brand_img/index.png" />
+
 <link href="/static/css/font-awesome.css" rel="stylesheet" type="text/css" media="all" /> 
 <!-- //font-awesome icons -->
 <!-- js -->
@@ -50,27 +52,27 @@
 
 
 {% block top_1 %}
-	<div class="agileits_header">
+	<div class="agileits_header" style="background-color: #3A3A3A">
         <div class="w3l_offers">
-			<a href="{% url 'user:personal' %}" style="padding-left:10px ;
-			margin-left: 0;
-			 padding-right: 10px;background-color: lightseagreen">
-                {{ user.name }} 个人中心</a>
+			<a href="{% url 'user:personal' %}" style="padding-left:10px;
+			margin-left: 0; padding-right: 10px; background-color: lightseagreen">{{ user.name }}个人中心</a>
 		</div>
 
 
 		<div class="w3l_offers">
-			<a>(●—●) 为您提供最值得信任的品牌和产品 !</a>
+			<a style="background-color:#3A3A3A">(●—●) 为您提供最值得信任的品牌和产品 !</a>
 		</div>
 
 		<div class="w3l_offers">
-			<a>这里有最周到贴心的服务 !</a>
+			<a style="background-color: #3A3A3A">(●—●) 这里有最周到贴心的服务 ! </a>
 		</div>
 
 		<div class="product_list_header">
-			<div style="cursor: pointer;">
-				<span class="glyphicon glyphicon-shopping-cart my-cart-icon"><i class="badge badge-notify my-cart-badge"></i></span>
-			</div>
+			<a href="{% url 'order:cart' %}"><div style="cursor: pointer;">
+				<span class="glyphicon glyphicon-shopping-cart my-cart-icon"><li class="badge badge-notify my-cart-badge" style="font-size: 1.2em;color:greenyellow">
+                    {{ total_count }}</li></span>
+
+			</div></a>
 		</div>
 
 		<div class="w3l_header_right">
@@ -89,6 +91,7 @@
 								<li><a href="{% url 'user:register' %}">注册</a></li>
                                 {% endif %}
 							</ul>
+
 						</div>
 					</div>
 				</li>
@@ -96,7 +99,7 @@
 		</div>
 
         <div class="w3l_header_right1">
-			<h2><a href="{% url 'order:pay' %}" style="padding-right: 10px;padding-left: 10px">
+			<h2><a href="{% url 'order:cart' %}" style="padding-right: 10px;padding-left: 10px">
                 去结账</a></h2>
 		</div>
 		<div class="clearfix"> </div>
@@ -133,15 +136,15 @@
 <!-- //script-for sticky-nav -->
 	<div class="logo_products">
 		<div class="container">
-			<div class="w3ls_logo_products_left">
-				<h1><a><span>品质之选</span> 大白手机商城</a></h1>
+			<div class="w3ls_logo_products_left" style="margin-left: 350px ;">
+				<h1 style="font-size: 25px"><a><span>品质之选</span > 大白手机商城</a></h1>
 			</div>
 			<div class="w3ls_logo_products_left1">
 				<ul class="special_items">
-					<li><a href="events.html">最新活动</a><i>/</i></li>
-					<li><a href="about.html">关于我们</a><i>/</i></li>
-					<li><a href="products.html">Best Deals</a><i>/</i></li>
-					<li><a href="services.html">我们的服务</a></li>
+					<li><i>/</i>有保障的品质</li>
+					<li><i>/</i>有温度的服务</li>
+					<li><i>/</i>有态度的店长</li>
+					<li></li>
 				</ul>
 			</div>
 			<div class="w3ls_logo_products_left1">
@@ -164,14 +167,13 @@
 
 <!-- products-breadcrumb -->
 
-{% block top_3 %}
+{% block page_name %}
 
 
-	<div class="products-breadcrumb">
-		<div class="container">
+	<div class="products-breadcrumb" style="">
+		<div class="container" >
 			<ul>
-				<li><i class="fa fa-home" aria-hidden="true"></i><a href="{% url 'user:index' %}">主页</a><span>|</span></li>
-				<li>首页推荐</li>
+				<li><i class="fa fa-home" aria-hidden="true"></i><a href="{% url 'user:index' %}">首页</a><span>|</span></li>
 			</ul>
 		</div>
 	</div>
@@ -186,20 +188,12 @@
 	<div class="banner">
 		<div class="w3l_banner_nav_left">
 			<nav class="navbar nav_bottom">
-			 <!-- Brand and toggle get grouped for better mobile display -->
-			  <div class="navbar-header nav_2">
-				  <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				  </button>
-			   </div> 
-			   <!-- Collect the nav links, forms, and other content for toggling -->
+
 				<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
 					<ul class="nav navbar-nav nav_1">
                         {% for brand in brands %}
-						<li><a href="{% url 'good:prodocts' brand.id %}">{{ brand.name }}</a></li>
+						<li><a href="{% url 'good:prodocts' brand.id %}">{{ brand.name }}
+                            </a></li>
                         {% endfor %}
 					</ul>
 				 </div><!-- /.navbar-collapse -->
@@ -214,102 +208,71 @@
         {% block main %}
 		<div class="w3l_banner_nav_right">
 
+              <!------------------------------广告 大图--------------------------->
 
-			<div class="w3l_banner_nav_right_banner3" >
-            <div id="big_add" class="w3l_banner_nav_right_banner3" style="background-color: red">
-{#                 <div id="big_add" class="w3l_banner_nav_right_banner3" style="background-image: url("{{ add1.image }}")">#}
-
-{#                ------------------------------广告 大图-------------------------------------------------------#}
-
-				<h3>{{ add1.title }}<span class="blink_me"></span></h3>
+            <div class="w3l_banner_nav_right_banner9 w3l_banner_nav_right_banner_pet"
+                 style="background-image: url('/{{add1.image}}')">
+                <a href="{% url 'good:single' add1.goods.id %}">{{ add1.title }} | <em style="font-size: 0.5em">了解一下</em></a>
 			</div>
-			<div class="w3l_banner_nav_right_banner3_btm">
-				<div class="col-md-4 w3l_banner_nav_right_banner3_btml">
-					<div class="view view-tenth">
-						<img src="/{{ add3.image }}" alt=" "  style="width: 400px; height: 266px;"  class="img-responsive" />
-						<div class="mask">
-							<h4>{{ add3.title }}11</h4>
-							<p>{{ add3.word }}11</p>
-						</div>
-					</div>
-					<h4>宣传词1111</h4>
-					<ol>
-						<li>sunt in culpa qui officia</li>
-						<li>commodo consequat</li>
-						<li>sed do eiusmod tempor incididunt</li>
-					</ol>
-				</div>
-				<div class="col-md-4 w3l_banner_nav_right_banner3_btml">
-					<div class="view view-tenth">
+                <!------------------------------广告 大图--------------------------->
 
-						<img src="/{{ add1.image }}" style="width: 400px;height: 266px;" alt=" " class="img-responsive" />
+
+
+			<div class="w3l_banner_nav_right_banner3_btm">
+
+                <!--------------中号--广告 *3 ----------------------------->
+                {% for add3 in add3_list %}
+				<div class="col-md-4 w3l_banner_nav_right_banner3_btml">
+					<div class="view view-tenth">
+						<img src="/{{ add3.image}}" alt=" "  style="width: 400px; height: 266px;"  class="img-responsive" />
 						<div class="mask">
 							<h4>{{ add3.title }}</h4>
 							<p>{{ add3.word }}</p>
 						</div>
 					</div>
+					<h4>{{ add3.title }}</h4>
 
+				</div>
+                {% endfor %}
 
-					<h4>宣传词3333</h4>
-					<ol>
-						<li>enim ipsam voluptatem officia</li>
-						<li>tempora incidunt ut labore et</li>
-						<li>vel eum iure reprehenderit</li>
-					</ol>
-				</div>
-				<div class="col-md-4 w3l_banner_nav_right_banner3_btml">
-					<div class="view view-tenth">
-						<img src="/static/images/15.jpg" alt=" " class="img-responsive" />
-						<div class="mask">
-							<h4>宣传3</h4>
-							<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt.</p>
-						</div>
-					</div>
-					<h4>宣传词</h4>
-					<ol>
-						<li>dolorem eum fugiat voluptas</li>
-						<li>ut aliquid ex ea commodi</li>
-						<li>magnam aliquam quaerat</li>
-					</ol>
-				</div>
+                <!--------------中号--广告 *3 ----------------------------->
 				<div class="clearfix"> </div>
 			</div>
 
-               <!----------------------------------------------------------------------------->
+
+
 
 			<div class="w3ls_w3l_banner_nav_right_grid">
 				<h3>首页推荐</h3>
-
-
-
 
 				<div class="w3ls_w3l_banner_nav_right_grid1">
 					<h6>高端旗舰</h6>
                     {% for good in goods_gao %}
 					<div class="col-md-3 w3ls_w3l_banner_left">
 						<div class="hover14 column">
-						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
+						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid" style="">
 							<div class="agile_top_brand_left_grid_pos">
 {#								<img src="/static/images/offer.png" alt=" " class="img-responsive" />#}
 							</div>
 							<div class="agile_top_brand_left_grid1">
-								<figure>
+                               <figure>
 									<div class="snipcart-item block">
-
 										<div class="snipcart-thumb">
-											<a href="{% url 'good:single' good.goods %}"><img src="/{{ good.goods__spu_img }}" alt=" " class="img-responsive" /></a>
-
-                                            <h4><span style="display: inline">&nbsp;&nbsp;{{ good.goods__name }}</span>
-                                                ¥ {{ good.minprice }}</h4>
-{#                                            <p style="display: inline">{{ good.goods__name }}</p><p style="display: inline">  222</p>>#}
-										</div>
-
-                                        <div class="snipcart-thumb">
-{#											<a href="{% url 'good:single' good.goods %}"><img src="/{{ good.goods__spu_img }}" alt=" " class="img-responsive" /></a>#}
-											<p>{{ good.goods__name }}</p>
-											<h4>¥ {{ good.minprice }} /起<span>$5.00</span></h4>
-										</div>
-
+											<a href="{% url 'good:single' good.goods %}"><img src="/{{ good.goods__spu_img }}" alt=" " class="img-responsive" />
+                                                <h4 style="text-align: center;margin:5px auto;">
+                                                    {{ good.goods__name }} &nbsp;&nbsp;&nbsp;
+                                                    <p style="color: red; margin: 0 auto">¥ {{ good.minprice }} <em style="font-size:13px">起</em></p>
+                                                </h4>
+                                                <table style="color:gray; font-size: 13px; margin: 5px auto; padding: 0">
+                                                    <tr>
+                                                        <td style="padding:0 15px">{{ good.goods__screen }}</td><td>{{ good.goods__cpu }}芯片</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding:0 15px;" colspan="2">{{ good.goods__point }}</td>
+                                                    </tr>
+                                                </table>
+                                            </a>
+								        </div>
 									</div>
 								</figure>
 							</div>
@@ -318,10 +281,6 @@
 					</div>
 
                     {% endfor %}
-
-
-
-
 
 
 					<div class="clearfix"> </div>
@@ -340,16 +299,24 @@
 {#								<img src="/static/images/offer.png" alt=" " class="img-responsive" />#}
 							</div>
 							<div class="agile_top_brand_left_grid1">
-								<figure>
+                               <figure>
 									<div class="snipcart-item block">
 										<div class="snipcart-thumb">
-											<a href="{% url 'good:single' good.goods %}"><img src="/{{ good.goods__spu_img }}" alt=" " class="img-responsive" /></a>
-											<p>{{ good.goods__name }}</p>
-											<h4>¥ {{ good.minprice }} /起 <span>$3.00</span></h4>
-										</div>
-										<div class="snipcart-details">
-											<button class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="9" data-name="Fresh spinach" data-summary="summary 9" data-price="2.00" data-quantity="1" data-image="images/9.png">Add to Cart</button>
-										</div>
+											<a href="{% url 'good:single' good.goods %}"><img src="/{{ good.goods__spu_img }}" alt=" " class="img-responsive" />
+                                                <h4 style="text-align: center;margin:5px auto;">
+                                                    {{ good.goods__name }} &nbsp;&nbsp;&nbsp;
+                                                    <p style="color: red; margin: 0 auto">¥ {{ good.minprice }} <em style="font-size:13px">起</em></p>
+                                                </h4>
+                                                <table style="color:gray; font-size: 13px; margin: 5px auto; padding: 0">
+                                                    <tr>
+                                                        <td style="padding:0 15px">{{ good.goods__screen }}</td><td>{{ good.goods__cpu }}芯片</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding:0 15px;" colspan="2">{{ good.goods__point }}</td>
+                                                    </tr>
+                                                </table>
+                                            </a>
+								        </div>
 									</div>
 								</figure>
 							</div>
@@ -360,13 +327,12 @@
 
 
 
-
 					<div class="clearfix"> </div>
 				</div>
 				<div class="w3ls_w3l_banner_nav_right_grid1">
 
 
-					<h6>实惠新品</h6>
+					<h6>实惠之选</h6>
                     {% for good in goods_di %}
 
 					<div class="col-md-3 w3ls_w3l_banner_left">
@@ -375,20 +341,32 @@
 							<div class="agile_top_brand_left_grid_pos">
 {#								<img src="/static/images/offer.png" alt=" " class="img-responsive" />#}
 							</div>
+
+
+
 							<div class="agile_top_brand_left_grid1">
-								<figure>
+                               <figure>
 									<div class="snipcart-item block">
 										<div class="snipcart-thumb">
-											<a href="{% url 'good:single' good.goods %} "><img src="/{{ good.goods__spu_img }}" alt=" " class="img-responsive" /></a>
-											<p style="margin: 0 auto">{{ good.goods__name }}</p>
-											<h4>¥ {{ good.minprice }} /起<span style="text-decoration: none"></span></h4>
-										</div>
-										<div class="snipcart-details">
-											<button class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="13" data-name="Mixed fruit juice" data-summary="summary 13" data-price="3.00" data-quantity="1" data-image="images/13.png">Add to Cart</button>
-										</div>
+											<a href="{% url 'good:single' good.goods %}"><img src="/{{ good.goods__spu_img }}" alt=" " class="img-responsive" />
+                                                <h4 style="text-align: center;margin:5px auto;">
+                                                    {{ good.goods__name }} &nbsp;&nbsp;&nbsp;
+                                                    <p style="color: red; margin: 0 auto">¥ {{ good.minprice }} <em style="font-size:13px">起</em></p>
+                                                </h4>
+                                                <table style="color:gray; font-size: 13px; margin: 5px auto; padding: 0">
+                                                    <tr>
+                                                        <td style="padding:0 15px">{{ good.goods__screen }}</td><td>{{ good.goods__cpu }}芯片</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding:0 15px;" colspan="2">{{ good.goods__point }}</td>
+                                                    </tr>
+                                                </table>
+                                            </a>
+								        </div>
 									</div>
 								</figure>
 							</div>
+
 						</div>
 						</div>
 					</div>
@@ -411,6 +389,7 @@
 
 
 <!-- newsletter -->
+    {% block newsletter %}
 	<div class="newsletter">
 		<div class="container">
 			<div class="w3agile_newsletter_left">
@@ -425,6 +404,8 @@
 			<div class="clearfix"> </div>
 		</div>
 	</div>
+    {% endblock %}
+
 <!-- //newsletter -->
 
 
@@ -433,70 +414,13 @@
 <!-- footer -->
 	<div class="footer">
 		<div class="container">
-			<div class="col-md-3 w3_footer_grid">
-				<h3>information</h3>
-				<ul class="w3_footer_grid_list">
-					<li><a href="events.html">Events</a></li>
-					<li><a href="about.html">About Us</a></li>
-					<li><a href="products.html">Best Deals</a></li>
-					<li><a href="services.html">Services</a></li>
-					<li><a href="short-codes.html">Short Codes</a></li>
-				</ul>
-			</div>
-			<div class="col-md-3 w3_footer_grid">
-				<h3>policy info</h3>
-				<ul class="w3_footer_grid_list">
-					<li><a href="faqs.html">FAQ</a></li>
-					<li><a href="privacy.html">privacy policy</a></li>
-					<li><a href="privacy.html">terms of use</a></li>
-				</ul>
-			</div>
-			<div class="col-md-3 w3_footer_grid">
-				<h3>what in stores</h3>
-				<ul class="w3_footer_grid_list">
-					<li><a href="pet.html">Pet Food</a></li>
-					<li><a href="frozen.html">Frozen Snacks</a></li>
-					<li><a href="kitchen.html">Kitchen</a></li>
-					<li><a href="products.html">Branded Foods</a></li>
-					<li><a href="household.html">Households</a></li>
-				</ul>
-			</div>
-			<div class="col-md-3 w3_footer_grid">
-				<h3>twitter posts</h3>
-				<ul class="w3_footer_grid_list1">
-					<li><label class="fa fa-twitter" aria-hidden="true"></label><i>01 day ago</i><span>Non numquam <a href="#">http://sd.ds/13jklf#</a>
-						eius modi tempora incidunt ut labore et
-						<a href="#">http://sd.ds/1389kjklf#</a>quo nulla.</span></li>
-					<li><label class="fa fa-twitter" aria-hidden="true"></label><i>02 day ago</i><span>Con numquam <a href="#">http://fd.uf/56hfg#</a>
-						eius modi tempora incidunt ut labore et
-						<a href="#">http://fd.uf/56hfg#</a>quo nulla.</span></li>
-				</ul>
-			</div>
-			<div class="clearfix"> </div>
-			<div class="agile_footer_grids">
-				<div class="col-md-3 w3_footer_grid agile_footer_grids_w3_footer">
-					<div class="w3_footer_grid_bottom">
-						<h4>100% secure payments</h4>
-						<img src="/static/images/card.png" alt=" " class="img-responsive" />
-					</div>
-				</div>
-				<div class="col-md-3 w3_footer_grid agile_footer_grids_w3_footer">
-					<div class="w3_footer_grid_bottom">
-						<h5>connect with us</h5>
-						<ul class="agileits_social_icons">
-							<li><a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-							<li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-							<li><a href="#" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-							<li><a href="#" class="instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-							<li><a href="#" class="dribbble"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="clearfix"> </div>
-			</div>
 			<div class="wthree_footer_copy">
-				<p>Copyright &copy; 2016.Company name All rights reserved.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+				<p>Copyright &copy; 2019 武汉 大白(手机)商城拥有对此网站的全部所有权
+                    <a href="{% url 'user:index' %}" target="_blank" title="大白(●—●)商城">大白商城 版权所有</a>
+{#                    - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>#}
+                </p>
 			</div>
+
 		</div>
 	</div>
 <!-- //footer -->
@@ -538,44 +462,44 @@ $(document).ready(function(){
 			});
 	</script>
 <!-- //here ends scrolling icon -->
-<script type='text/javascript' src="/static/js/jquery.mycart.js"></script>
-<script type="text/javascript">
-  $(function () {
-
-    var goToCartIcon = function($addTocartBtn){
-      var $cartIcon = $(".my-cart-icon");
-      var $image = $('<img width="30px" height="30px" src="' + $addTocartBtn.data("image") + '"/>').css({"position": "fixed", "z-index": "999"});
-      $addTocartBtn.prepend($image);
-      var position = $cartIcon.position();
-      $image.animate({
-	  
-      }, 500 , "linear", function() {
-        $image.remove();
-      });
-    }
-
-    $('.my-cart-btn').myCart({
-      classCartIcon: 'my-cart-icon',
-      classCartBadge: 'my-cart-badge',
-      affixCartIcon: true,
-      checkoutCart: function(products) {
-        $.each(products, function(){
-          console.log(this);
-        });
-      },
-      clickOnAddToCart: function($addTocart){
-        goToCartIcon($addTocart);
-      },
-      getDiscountPrice: function(products) {
-        var total = 0;
-        $.each(products, function(){
-          total += this.quantity * this.price;
-        });
-        return total * 1;
-      }
-    });
-
-  });
-  </script>
+{#<script type='text/javascript' src="/static/js/jquery.mycart.js"></script>#}
+{#<script type="text/javascript">#}
+{#  $(function () {#}
+{##}
+{#    var goToCartIcon = function($addTocartBtn){#}
+{#      var $cartIcon = $(".my-cart-icon");#}
+{#      var $image = $('<img width="30px" height="30px" src="' + $addTocartBtn.data("image") + '"/>').css({"position": "fixed", "z-index": "999"});#}
+{#      $addTocartBtn.prepend($image);#}
+{#      var position = $cartIcon.position();#}
+{#      $image.animate({#}
+{#	  #}
+{#      }, 500 , "linear", function() {#}
+{#        $image.remove();#}
+{#      });#}
+{#    }#}
+{##}
+{#    $('.my-cart-btn').myCart({#}
+{#      classCartIcon: 'my-cart-icon',#}
+{#      classCartBadge: 'my-cart-badge',#}
+{#      affixCartIcon: true,#}
+{#      checkoutCart: function(products) {#}
+{#        $.each(products, function(){#}
+{#          console.log(this);#}
+{#        });#}
+{#      },#}
+{#      clickOnAddToCart: function($addTocart){#}
+{#        goToCartIcon($addTocart);#}
+{#      },#}
+{#      getDiscountPrice: function(products) {#}
+{#        var total = 0;#}
+{#        $.each(products, function(){#}
+{#          total += this.quantity * this.price;#}
+{#        });#}
+{#        return total * 1;#}
+{#      }#}
+{#    });#}
+{##}
+{#  });#}
+{#  </script>#}
 </body>
 </html>

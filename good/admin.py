@@ -28,8 +28,8 @@ class SKUAdmin(admin.ModelAdmin):
 
 
 class SPUAdmin(admin.ModelAdmin):
-    list_display = ['id','name', 'detail','spu_img']
-    list_editable = ['detail','spu_img']
+    list_display = ['id','name', 'spu_img','screen','cpu','point']
+    list_editable = ['name','spu_img','screen','cpu','point']
     search_fields = ['name']
     fileds = ['name']
 

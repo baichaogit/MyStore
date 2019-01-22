@@ -33,6 +33,7 @@ class GoodSKU(models.Model):
         (5,'8+64G'), (6,'8+128G'),(7,'8+256G'),
         (8, '64G'), (9,'128G'), (10,'256G'),(11,'512G'),(12,'32G')
     )
+
     status_choices = ((0,'下线'), (1,'上线'),)
     brand =  models.ForeignKey('GoodBrand', verbose_name='产品品牌')
     goods = models.ForeignKey('Goods',verbose_name='产品SPU')
@@ -65,6 +66,10 @@ class Goods(models.Model):
     name = models.CharField(max_length=20, verbose_name='产品SPU名')
     # 富文本类型:带有格式的文本
     detail = HTMLField(blank=True, verbose_name="产品详情")
+    screen = models.CharField(max_length=20, verbose_name='屏幕',null=True)
+    # pixel = models.CharField(max_length=20,verbose_name='主像素',null=True)
+    cpu = models.CharField(max_length=20,verbose_name='处理器',null=True)
+    point = models.CharField(max_length=20, verbose_name='卖点',null=True)
     spu_img = models.ImageField(upload_to='static/spu_img', default='null',verbose_name='产品图片')
     # 有了一个隐式属性 goodsku_set
 
@@ -99,7 +104,7 @@ class Dingwei(models.Model):
 
 # 商品图片模型类
 class GoodImage(models.Model):
-    sku = models.ForeignKey('GoodSKU', verbose_name='产品')
+    sku = models.ForeignKey(GoodSKU, verbose_name='产品')
     image = models.ImageField(upload_to='static/goods_img', verbose_name='图片路径')
 
     def __str__(self):
@@ -116,8 +121,9 @@ class GoodImage(models.Model):
 
 # 主页最上面的一幅 广告大图
 class IndexAdd(models.Model):
-    title = models.CharField(max_length=12, verbose_name='广告词')
+    title = models.CharField(max_length=30, verbose_name='广告词')
     image = models.ImageField(upload_to='static/add_img', verbose_name='广告大图')
+    goods = models.ForeignKey('Goods', verbose_name='产品SPU',null=True)
 
     def __str__(self):
         return self.title

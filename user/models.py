@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
@@ -5,10 +6,12 @@ from django.db import models
 
 
 class UserInfo(models.Model):
+# class UserInfo(AbstractUser):
     name = models.CharField(max_length=30,verbose_name='用户名')
     email = models.EmailField(null=False,verbose_name='邮箱')
     pwd = models.CharField(max_length=100,verbose_name='密码')
     isActive = models.BooleanField(default=1,verbose_name='是否有效')
+
 
     def __str__(self):
         return self.name

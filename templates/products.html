@@ -4,7 +4,7 @@
 
 {% block head %}
 <head>
-<title>Pet Food</title>
+<title>{{ brand_name }} 专区</title>
 
 <!-- for-mobile-apps -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,6 +16,8 @@
 <link href="/static/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <link href="/static/css/style.css" rel="stylesheet" type="text/css" media="all" />
 <!-- font-awesome icons -->
+    <link rel="icon" type="image/x-icon" href="/{{ brand_image }}" />
+
 <link href="/static/css/font-awesome.css" rel="stylesheet" type="text/css" media="all" /> 
 <!-- //font-awesome icons -->
 <!-- js -->
@@ -39,9 +41,17 @@
 {% endblock %}
 
 
-    {% block yemian %}
-    <li>单品详情</li>
-    {% endblock %}
+{% block page_name %}
+
+	<div class="products-breadcrumb">
+		<div class="container">
+			<ul>
+				<li><i class="fa fa-home" aria-hidden="true"></i><a href="{% url 'user:index' %}">首页</a><span style="color: red">|</span></li>
+				<li style="color: white">{{ brand_name }} 品牌页</li>
+			</ul>
+		</div>
+	</div>
+{% endblock %}
 
 
 
@@ -50,38 +60,54 @@
     <!------广告宣传大图--------->
 		<div class="w3l_banner_nav_right">
 
-			<div class="w3l_banner_nav_right_banner9 w3l_banner_nav_right_banner_pet">
-				<h4>这里是一张广告大图</h4>
-				<p>Sint occaecat cupidatat non proident</p>
-				<a href="single.html">Shop Now</a>
-			</div>
+          <!------------------------------广告 大图--------------------------->
+        <div class="w3l_banner_nav_right_banner9 w3l_banner_nav_right_banner_pet"
+             style="background-image: url('/{{add1.image}}')">
+            <a href="{% url 'good:single' add1.goods.id %}">{{ add1.title }} | <em style="font-size: 0.5em">了解一下</em></a>
+        </div>
+            <!------------------------------广告 大图--------------------------->
 
+
+            <!------------品牌 logo--------------->
 			<div class="w3ls_w3l_banner_nav_right_grid w3ls_w3l_banner_nav_right_grid_sub">
-				<h3 class="w3l_fruit">品牌详情页</h3>
+				<h3 class="w3l_fruit" style="font-size: 18px;"> <img src="/{{ brand_image }}" style="margin:0 5px 10px 0;">
+{#                    {{ brand_name }}#}
+                </h3 >
 
 				<div class="w3ls_w3l_banner_nav_right_grid1 w3ls_w3l_banner_nav_right_grid1_veg">
+
             <!-------------------->
                     {% for good in goods %}
 					<div class="col-md-3 w3ls_w3l_banner_left w3ls_w3l_banner_left_asdfdfd"
                          style="margin-bottom: 20px ">
 						<div class="hover14 column">
-						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid" >
-							<div class="agile_top_brand_left_grid_pos">
-								<img src="/static/images/offer.png" alt=" " class="img-responsive" />
-							</div>
+						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid" style="">
+{#							<div class="agile_top_brand_left_grid_pos">#}
+{#								<img src="/static/images/offer.png" alt=" " class="img-responsive" />#}
+{#							</div>#}
 							<div class="agile_top_brand_left_grid1">
-								<figure>
+
+                               <figure>
 									<div class="snipcart-item block">
 										<div class="snipcart-thumb">
-											<a href="{% url 'good:single' good.goods %}"><img src="/{{ good.goods__spu_img }}" alt=" " class="img-responsive" /></a>
-                                            <p>{{ good.goods__name }}</p>
-											<h4>¥ {{ good.minprice }} /起<span style="text-decoration: none"></span></h4>
-										</div>
-										<div class="snipcart-details">
-											<button class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="57" data-name="Can - tuna for cats" data-summary="summary 57" data-price="8.00" data-quantity="1" data-image="images/57.png">Add to Cart</button>
-										</div>
+											<a href="{% url 'good:single' good.goods %}"><img src="/{{ good.goods__spu_img }}" alt=" " class="img-responsive" />
+                                                <h4 style="text-align: center;margin:5px auto;">
+                                                    {{ good.goods__name }} &nbsp;&nbsp;&nbsp;
+                                                    <p style="color: red; margin: 0 auto">¥ {{ good.minprice }} <em style="font-size:13px">起</em></p>
+                                                </h4>
+                                                <table style="color:gray; font-size: 13px; margin: 5px auto; padding: 0">
+                                                    <tr>
+                                                        <td style="padding:0 15px">{{ good.goods__screen }}</td><td>{{ good.goods__cpu }}芯片</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding:0 15px;" colspan="2">{{ good.goods__point }}</td>
+                                                    </tr>
+                                                </table>
+                                            </a>
+								        </div>
 									</div>
 								</figure>
+
 							</div>
 						</div>
 						</div>

@@ -3,6 +3,7 @@
 
 
 
+
 {% load staticfiles %}
 
 
@@ -10,7 +11,7 @@
 {% block head %}
 
 <head>
-<title>单品详情页</title>
+<title>{{ goods_name }}</title>
 <!-- for-mobile-apps -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -21,6 +22,8 @@
 <link href="/static/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <link href="/static/css/style.css" rel="stylesheet" type="text/css" media="all" />
 <!-- font-awesome icons -->
+     <link rel="icon" type="image/x-icon" href="/{{ goods_img }}" />
+
 <link href="/static/css/font-awesome.css" rel="stylesheet" type="text/css" media="all" /> 
 <!-- //font-awesome icons -->
 <!-- js -->
@@ -42,6 +45,9 @@
 <!-- start-smoth-scrolling -->
 <script type="text/javascript" src="/static/js/move-top.js"></script>
 <script type="text/javascript" src="/static/js/easing.js"></script>
+
+<script src="/static/js/jquery-1.11.1.min.js"></script>
+
 <script type="text/javascript">
 	jQuery(document).ready(function($) {
 		$(".scroll").click(function(event){		
@@ -56,84 +62,144 @@
 {% endblock %}
 
 
+{% block page_name %}
 
+	<div class="products-breadcrumb">
+		<div class="container">
+			<ul>
+				<li><i class="fa fa-home" aria-hidden="true"></i><a href="{% url 'user:index' %}">首页</a><span style="color: red">|</span></li>
+			<li style="color: white">{{ goods_name }} </li>
+			</ul>
+		</div>
+	</div>
+{% endblock %}
 
-
+<div class="goods_count fl" id="show_count">{{mycartc}}</div>
 
 
       {% block main %}
-      <!--------------广告宣传大图----------------->
+
         <div class="w3l_banner_nav_right">
-        <div class="w3l_banner_nav_right_banner9 w3l_banner_nav_right_banner_pet">
-            <h4>Your Pet Favourite Food</h4>
-            <p>Sint occaecat cupidatat non proident</p>
-            <a href="single.html">Shop Now</a>
-        </div>
+
+        <!--------------广告宣传大图 : ----------------->
+
+            <div class="w3l_banner_nav_right_banner9 w3l_banner_nav_right_banner_pet"
+                 style="background-image: url('/{{add1.image}}')">
+                <a href="{% url 'good:single' add1.goods.id %}">{{ add1.title }} | <em style="font-size: 0.5em">了解一下</em></a>
+            </div>
+
 
 
 
       <!---------单品 详情介绍--------------------->
         <div class="agileinfo_single" style="margin-top: 0px">
                     <h5>{{ goods_name }}</h5>
+
                     <div class="col-md-4 agileinfo_single_left" style="height: 23em">
                         <img id="example" src="/{{ goods_img }}" alt=" " class="img-responsive" style="width: 22em" />
                     </div>
                     <div class="col-md-8 agileinfo_single_right">
-                        <div class="rating1">
-                            <span class="starRating">
-                                <input id="rating5" type="radio" name="rating" value="5">
-                                <label for="rating5">5</label>
-                                <input id="rating4" type="radio" name="rating" value="4">
-                                <label for="rating4">4</label>
-                                <input id="rating3" type="radio" name="rating" value="3" checked>
-                                <label for="rating3">3</label>
-                                <input id="rating2" type="radio" name="rating" value="2">
-                                <label for="rating2">2</label>
-                                <input id="rating1" type="radio" name="rating" value="1">
-                                <label for="rating1">1</label>
-                            </span>
-                        </div>
-                        <div class="w3agile_description" style="margin-bottom: 0px">
-                            <h4>产品描述 :</h4>
+                        <div class="w3agile_description" style="">
+{#                            <h4>产品描述 :</h4>#}
                             <p> {{ goods_detail | safe }}</p>
+                            <span id="have_choice" style="color: red"></span> &ensp;&ensp;
+                            <strong id="show_price" style="margin-left: 0 ;color: red;font-size: 18px;background-color: wheat;">请选取内存</strong>
+                            <span id="choice_id" style="display: none">隐藏元素 用来放所选产品的id</span>
                         </div>
-                <!----------------- 产品信息 -------------------->
-                        {% for sku in good_sku %}
-                        <div class="snipcart-item block" style="margin-top: 10px ; font-size: 1.2em">
-                            <div class="snipcart-thumb agileinfo_single_right_snipcart" style="display: inline">
 
-                                <h4 style="display: inline; color: #122b40">{{ sku.name }}
-                                    <span style="text-decoration: none"></span>
-                                </h4>
+                <!----------------- 产品 内存 遍历 显示 -------------------->
 
-                                <h4 style="display: inline ;color: #d43f3a">¥ {{ sku.price }}
-                                    <span style="text-decoration: none"></span>
-                                </h4>
+                        {% for goodone in good_sku %}
 
-                            </div>
-                            <div class="snipcart-details agileinfo_single_right_details" style="display: inline-block; width: 200px;">
-                                <button class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="76"
-                                        data-name="Pulao basmati rice" data-summary="summary 76" data-price="21.00"
-                                        data-quantity="1" data-image="images/76.png" >购买 {{ sku.get_neicun_display }}版</button>
-                            </div>
-                        </div>
-                         {% endfor %}
+                        <button class="choice_neicun"
+                                data1="{{ goodone.price }}"
+                                data2="{{ goodone.get_neicun_display }}"
+                                data3="{{ goodone.id }}"
+                                style="margin-right:1em ">{{ goodone.get_neicun_display }}</button>
 
+                          {% endfor %}
+                        <br><br>
+                    <div style="">
+                        <br>
+
+                        <button id="buy_now" style="margin-right:2em; width:10em; background-color:lightcoral;color: white">
+                            立即购买
+                        </button>
+
+                        <button id="add_cart" style="width: 10em;background-color: brown; color: white;">
+                            加进购物车
+                        </button>
+                        <span class="ti_shi"></span>
 
                     </div>
+                    </div>
+        </div>
                     <div class="clearfix"> </div>
                 </div>
-            </div>
+
             <div class="clearfix"></div>
-        </div>
+
+
+
+<!------ 根据内存 局部刷新 价格 ------->
+
+    <script type="text/javascript">
+    $('.choice_neicun').click(function () {
+        var neicun = $(this).attr('data2');  //选择的内存
+        var price = $(this).attr('data1');  //对应的价格
+        var idid = $(this).attr('data3');  //对应的id
+        $('#show_price').html('¥ '+price);
+        $('#have_choice').html('已选:'+neicun)
+        $('#choice_id').html(idid)
+    });
+    </script>
+<!--  ------  -------  ------ ------>
+
+
+<!---点击 加购物车 拿到产品id 传回后端---------------------->
+    <script type="text/javascript">
+    $('#add_cart').click(function () {
+        var idid = $('#choice_id').text();  //获取对应内存的 产品的id
+        console.log(idid);
+        {#var params = {'sku_id':idid};#}
+        $.ajax({
+            url:"/order/add_cart/?sku_id="+idid,
+            type:'get',
+            dataType:'json',
+            async:true,
+            success:function (data) {
+                {#alert(data);#}
+                console.log(data['text']);
+                {#console.log(typeof(data['text']));#}
+                if(data['status']=='1'){
+                alert(data['text']);
+                var mycart_count = $('.my-cart-badge').html();
+                var new_count = parseInt(mycart_count) + 1;
+                $('.my-cart-badge').html(new_count)
+                };
+
+                if(data['status']=='2'){
+                    alert(data['text']);
+                };
+
+            },
+            error:function (error) {
+                console.log(data['text']);
+            }
+        })
+    })
+    </script>
+<!------------------------->
+
+
 
 
 
 
 <!-- brands -->
-	<div class="w3ls_w3l_banner_nav_right_grid w3ls_w3l_banner_nav_right_grid_popular">
+	<div class="w3ls_w3l_banner_nav_right_grid w3ls_w3l_banner_nav_right_grid_popular" style="background-color:wheat; margin-top: 50px">
 		<div class="container">
-			<h3>其他规格</h3>
+			<h3 style="font-size: 25px">最 近 浏 览</h3>
 				<div class="w3ls_w3l_banner_nav_right_grid1">
 {#					<h6>food</h6>#}
 					<div class="col-md-3 w3ls_w3l_banner_left">
@@ -146,7 +212,7 @@
 								<figure>
 									<div class="snipcart-item block">
 										<div class="snipcart-thumb">
-											<a href="single.html"><img src="/static/images/5.png" alt=" " class="img-responsive" /></a>
+											<a href="single_弃之.html"><img src="/static/images/5.png" alt=" " class="img-responsive" /></a>
 											<p>knorr instant soup (100 gm)</p>
 											<h4>$3.00 <span>$5.00</span></h4>
 										</div>
@@ -170,7 +236,7 @@
 								<figure>
 									<div class="snipcart-item block">
 										<div class="snipcart-thumb">
-											<a href="single.html"><img src="/static/images/6.png" alt=" " class="img-responsive" /></a>
+											<a href="single_弃之.html"><img src="/static/images/6.png" alt=" " class="img-responsive" /></a>
 											<p>chings noodles (75 gm)</p>
 											<h4>$5.00 <span>$8.00</span></h4>
 										</div>
@@ -194,7 +260,7 @@
 								<figure>
 									<div class="snipcart-item block">
 										<div class="snipcart-thumb">
-											<a href="single.html"><img src="/static/images/7.png" alt=" " class="img-responsive" /></a>
+											<a href="single_弃之.html"><img src="/static/images/7.png" alt=" " class="img-responsive" /></a>
 											<p>lahsun sev (150 gm)</p>
 											<h4>$3.00 <span>$5.00</span></h4>
 										</div>
@@ -217,7 +283,7 @@
 								<figure>
 									<div class="snipcart-item block">
 										<div class="snipcart-thumb">
-											<a href="single.html"><img src="/static/images/8.png" alt=" " class="img-responsive" /></a>
+											<a href="single_弃之.html"><img src="/static/images/8.png" alt=" " class="img-responsive" /></a>
 											<p>premium bake rusk (300 gm)</p>
 											<h4>$5.00 <span>$7.00</span></h4>
 										</div>
@@ -232,202 +298,19 @@
 					</div>
 					<div class="clearfix"> </div>
 				</div>
-				<div class="w3ls_w3l_banner_nav_right_grid1">
-					<h6>vegetables & fruits</h6>
-					<div class="col-md-3 w3ls_w3l_banner_left">
-						<div class="hover14 column">
-						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
-							<div class="agile_top_brand_left_grid_pos">
-								<img src="/static/images/offer.png" alt=" " class="img-responsive" />
-							</div>
-							<div class="agile_top_brand_left_grid1">
-								<figure>
-									<div class="snipcart-item block">
-										<div class="snipcart-thumb">
-											<a href="single.html"><img src="/static/images/9.png" alt=" " class="img-responsive" /></a>
-											<p>fresh spinach (palak)</p>
-											<h4>$2.00 <span>$3.00</span></h4>
-										</div>
-										<div class="snipcart-details">
-											<button class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="9" data-name="Fresh spinach" data-summary="summary 9" data-price="2.00" data-quantity="1" data-image="images/9.png">Add to Cart</button>
-										</div>
-									</div>
-								</figure>
-							</div>
-						</div>
-						</div>
-					</div>
-					<div class="col-md-3 w3ls_w3l_banner_left">
-						<div class="hover14 column">
-						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
-							<div class="agile_top_brand_left_grid_pos">
-								<img src="/static/images/offer.png" alt=" " class="img-responsive" />
-							</div>
-							<div class="agile_top_brand_left_grid1">
-								<figure>
-									<div class="snipcart-item block">
-										<div class="snipcart-thumb">
-											<a href="single.html"><img src="/static/images/10.png" alt=" " class="img-responsive" /></a>
-											<p>fresh mango dasheri (1 kg)</p>
-											<h4>$5.00 <span>$8.00</span></h4>
-										</div>
-										<div class="snipcart-details">
-											<button class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="10" data-name="Fresh mango dasheri" data-summary="summary 10" data-price="5.00" data-quantity="1" data-image="images/10.png">Add to Cart</button>
-										</div>
-									</div>
-								</figure>
-							</div>
-						</div>
-						</div>
-					</div>
-					<div class="col-md-3 w3ls_w3l_banner_left">
-						<div class="hover14 column">
-						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
-							<div class="tag"><img src="/static/images/tag.png" alt=" " class="img-responsive" /></div>
-							<div class="agile_top_brand_left_grid1">
-								<figure>
-									<div class="snipcart-item block">
-										<div class="snipcart-thumb">
-											<a href="single.html"><img src="/static/images/11.png" alt=" " class="img-responsive" /></a>
-											<p>fresh apple red (1 kg)</p>
-											<h4>$6.00 <span>$8.00</span></h4>
-										</div>
-										<div class="snipcart-details">
-											<button class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="11" data-name="Fresh apple red" data-summary="summary 11" data-price="6.00" data-quantity="1" data-image="images/11.png">Add to Cart</button>
-										</div>
-									</div>
-								</figure>
-							</div>
-						</div>
-						</div>
-					</div>
-					<div class="col-md-3 w3ls_w3l_banner_left">
-						<div class="hover14 column">
-						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
-							<div class="agile_top_brand_left_grid_pos">
-								<img src="/static/images/offer.png" alt=" " class="img-responsive" />
-							</div>
-							<div class="agile_top_brand_left_grid1">
-								<figure>
-									<div class="snipcart-item block">
-										<div class="snipcart-thumb">
-											<a href="single.html"><img src="/static/images/12.png" alt=" " class="img-responsive" /></a>
-											<p>fresh broccoli (500 gm)</p>
-											<h4>$4.00 <span>$6.00</span></h4>
-										</div>
-										<div class="snipcart-details">
-											<button class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="12" data-name="Fresh basket broccoli" data-summary="summary 12" data-price="4.00" data-quantity="1" data-image="images/12.png">Add to Cart</button>
-										</div>
-									</div>
-								</figure>
-							</div>
-						</div>
-						</div>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-				<div class="w3ls_w3l_banner_nav_right_grid1">
-					<h6>beverages</h6>
-					<div class="col-md-3 w3ls_w3l_banner_left">
-						<div class="hover14 column">
-						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
-							<div class="agile_top_brand_left_grid_pos">
-								<img src="/static/images/offer.png" alt=" " class="img-responsive" />
-							</div>
-							<div class="agile_top_brand_left_grid1">
-								<figure>
-									<div class="snipcart-item block">
-										<div class="snipcart-thumb">
-											<a href="single.html"><img src="/static/images/13.png" alt=" " class="img-responsive" /></a>
-											<p>mixed fruit juice (1 ltr)</p>
-											<h4>$3.00 <span>$4.00</span></h4>
-										</div>
-										<div class="snipcart-details">
-											<button class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="13" data-name="Mixed fruit juice" data-summary="summary 13" data-price="3.00" data-quantity="1" data-image="images/13.png">Add to Cart</button>
-										</div>
-									</div>
-								</figure>
-							</div>
-						</div>
-						</div>
-					</div>
-					<div class="col-md-3 w3ls_w3l_banner_left">
-						<div class="hover14 column">
-						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
-							<div class="agile_top_brand_left_grid_pos">
-								<img src="/static/images/offer.png" alt=" " class="img-responsive" />
-							</div>
-							<div class="agile_top_brand_left_grid1">
-								<figure>
-									<div class="snipcart-item block">
-										<div class="snipcart-thumb">
-											<a href="single.html"><img src="/static/images/14.png" alt=" " class="img-responsive" /></a>
-											<p>prune juice - sunsweet (1 ltr)</p>
-											<h4>$4.00 <span>$5.00</span></h4>
-										</div>
-										<div class="snipcart-details">
-											<button class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="14" data-name="Prune juice - sunsweet" data-summary="summary 14" data-price="4.00" data-quantity="1" data-image="images/14.png">Add to Cart</button>
-										</div>
-									</div>
-								</figure>
-							</div>
-						</div>
-						</div>
-					</div>
-					<div class="col-md-3 w3ls_w3l_banner_left">
-						<div class="hover14 column">
-						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
-							<div class="tag"><img src="/static/images/tag.png" alt=" " class="img-responsive" /></div>
-							<div class="agile_top_brand_left_grid1">
-								<figure>
-									<div class="snipcart-item block">
-										<div class="snipcart-thumb">
-											<a href="single.html"><img src="/static/images/15.png" alt=" " class="img-responsive" /></a>
-											<p>coco cola zero can (330 ml)</p>
-											<h4>$3.00 <span>$5.00</span></h4>
-										</div>
-										<div class="snipcart-details">
-											<button class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="15" data-name="Coco cola zero can" data-summary="summary 15" data-price="3.00" data-quantity="1" data-image="images/15.png">Add to Cart</button>
-										</div>
-									</div>
-								</figure>
-							</div>
-						</div>
-						</div>
-					</div>
-					<div class="col-md-3 w3ls_w3l_banner_left">
-						<div class="hover14 column">
-						<div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
-							<div class="agile_top_brand_left_grid_pos">
-								<img src="/static/images/offer.png" alt=" " class="img-responsive" />
-							</div>
-							<div class="agile_top_brand_left_grid1">
-								<figure>
-									<div class="snipcart-item block">
-										<div class="snipcart-thumb">
-											<a href="single.html"><img src="/static/images/16.png" alt=" " class="img-responsive" /></a>
-											<p>sprite bottle (2 ltr)</p>
-											<h4>$3.00 <span>$4.00</span></h4>
-										</div>
-										<div class="snipcart-details">
-											<button class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="16" data-name="Sprite bottle" data-summary="summary 16" data-price="3.00" data-quantity="1" data-image="images/16.png">Add to Cart</button>
-										</div>
-									</div>
-								</figure>
-							</div>
-						</div>
-						</div>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
 		</div>
 	</div>
 <!-- //brands -->
 {% endblock %}
+
+
+
+<!------------------------------------------------------------------------------------->
 <!------------------------------------------------------------------------------------->
 
+{% block newsletter %}
 
-
+{% endblock %}
 
 
 
@@ -449,7 +332,7 @@ $(document).ready(function(){
     );
 });
 </script>
-<script type="text/javascript" id="snipcart" src="/static/js/snipcart.js" data-api-key="ZGQxNzVjZTItOWRmNS00YjJhLTlmNGUtMDE4NjdiY2RmZGNj"></script>
+{#<script type="text/javascript" id="snipcart" src="/static/js/snipcart.js" data-api-key="ZGQxNzVjZTItOWRmNS00YjJhLTlmNGUtMDE4NjdiY2RmZGNj"></script>#}
 
 
 <!-- here stars scrolling icon -->
@@ -471,43 +354,98 @@ $(document).ready(function(){
 
 <!-- //here ends scrolling icon -->
 <script type='text/javascript' src="/static/js/jquery.mycart.js"></script>
-<script type="text/javascript">
-  $(function () {
 
-    var goToCartIcon = function($addTocartBtn){
-      var $cartIcon = $(".my-cart-icon");
-      var $image = $('<img width="30px" height="30px" src="' + $addTocartBtn.data("image") + '"/>').css({"position": "fixed", "z-index": "999"});
-      $addTocartBtn.prepend($image);
-      var position = $cartIcon.position();
-      $image.animate({
-	  
-      }, 500 , "linear", function() {
-        $image.remove();
-      });
-    }
 
-    $('.my-cart-btn').myCart({
-      classCartIcon: 'my-cart-icon',
-      classCartBadge: 'my-cart-badge',
-      affixCartIcon: true,
-      checkoutCart: function(products) {
-        $.each(products, function(){
-          console.log(this);
-        });
-      },
-      clickOnAddToCart: function($addTocart){
-        goToCartIcon($addTocart);
-      },
-      getDiscountPrice: function(products) {
-        var total = 0;
-        $.each(products, function(){
-          total += this.quantity * this.price;
-        });
-        return total * 1;
-      }
-    });
 
-  });
-  </script>
-</body>
-</html>
+
+
+<!------点击购买按钮  传数据到后端----------->
+
+
+{#	<script type="text/javascript">#}
+{##}
+{#        $(function () {#}
+{##}
+            {#var count = $('.num_show').val();#}
+{#            var count = 1;#}
+{#            var total = count * $('.show_pirce em').text();#}
+{#            $('#total_ em').text(total.toFixed(2));#}
+{##}
+{##}
+{##}
+{#        });#}
+		// 数量＋
+        {#function add() {#}
+        {#    var numa = parseInt($('.num_show').val());#}
+        {#    $('.num_show').val(numa+1);#}
+        {#    $('.num_show').removeAttr("disabled");#}
+        {#    $('.num_show').blur();#}
+        {#    total()#}
+
+		// 数量-
+        {#function sub() {#}
+        {#    var numa = parseInt($('.num_show').val());#}
+        {#    if (numa > 1){#}
+        {#        $('.num_show').val(numa-1);#}
+        {#    }else {#}
+        {#        $('.num_show').attr('disabled', 'disabled');#}
+        {#    }#}
+        {#    $('.num_show').blur();#}
+        {#    total();}#}
+
+{##}
+{#        function total() {#}
+{#            var count = $('.num_show').val();#}
+{#            var total = count * $('.show_pirce em').text();#}
+{#            $('#total_ em').text(total.toFixed(2));#}
+{#        }#}
+		{#var $add_x = $('#add_cart').offset().top;#}
+		{#var $add_y = $('#add_cart').offset().left;#}
+        {##}
+		{#var $to_x = $('#show_count').offset().top;#}
+		{#var $to_y = $('#show_count').offset().left;#}
+
+
+		{#$(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'});#}
+
+		// 加购物车 异步请求
+	{#	$('#add_cart').click(function(){#}
+			{#$(".add_jump").stop().animate({#}
+			{#	'left': $to_y+7,#}
+			{#	'top': $to_x+7},#}
+			{#	"fast", function() {#}
+			{#		$(".add_jump").fadeOut('fast',function(){#}
+			{#			$('#show_count').html(2);#}
+			{#		}););#}
+	{#		$.ajax({#}
+                {#url: '/cart/addcart/?good_id='+ '{{ goodone.id }}'+ '&gcount='+ $('.num_show').val(),#}
+    {#            url: '/order/add_cart/?good_id='+ '{{ goodone.id }}'+ '&gcount='+ $('.num_show').val(),#}
+    {#            type: 'get',#}
+    {#            datatype: 'json',#}
+    {#            success:function (data) {#}
+					{#console.log(typeof($('.num_show').val()));#}
+					{#console.log(typeof($('#show_count').text()));#}
+    {#                console.log('okokokokok 添加成功');#}
+                    {#$('#show_count').text(parseInt($('.num_show').val()) + parseInt($('#show_count').text()));#}
+    {#            },#}
+    {#            error:function (error) {#}
+    {#            	console.log(error);#}
+    {#                alert('添加失败, 请检查网络并重新添加. 失败原因见' + error)#}
+    {#            }#}
+    {#        })#}
+	{#	})#}
+    {##}
+	{#</script>#}
+
+
+
+
+
+
+
+
+
+
+
+
+

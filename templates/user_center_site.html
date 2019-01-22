@@ -7,23 +7,24 @@
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
-	<div class="header_con" style="background-color:wheat ; font-size: 18px; height: 30px">
-		<div class="header">
-			<div class="welcome fl">大白手机商城  感谢您的支持!!</div>
-			<div class="fr">
 
-				<div class="login_btn fl">
-					<a href="{% url 'user:index' %}">返回主页</a>
+	<div class="header_con" style="background-color:#3A3A3A; color: white; height: 50px; font-size: 15px">
+		<div class="header" >
+			<div class="welcome fl" style="line-height: 50px">大白手机商城  感谢您的支持!!</div>
+			<div class="fr" >
+
+				<div class="login_btn fl" style="line-height: 50px">
+					<a href="{% url 'user:index' %}" >返回主页</a>
 					<span>|</span>
-					<a href="{% url 'user:logout' %}">退出登录</a>
+					<a href="{% url 'user:logout' %}" >退出登录</a>
 				</div>
-				<div class="user_link fl">
+				<div class="user_link fl" style="line-height: 50px">
 					<span>|</span>
-					<a href="user_center_info.html">用户中心</a>
+					<a href="user_center_info.html" >用户中心</a>
 					<span>|</span>
-					<a href="cart.html">我的购物车</a>
+					<a href="cart.html" >我的购物车</a>
 					<span>|</span>
-					<a href="user_center_order.html">我的订单</a>
+					<a href="user_center_order.html" >我的订单</a>
 				</div>
 			</div>
 		</div>
@@ -82,20 +83,12 @@
 	</div>
 
 
-
-	<div class="footer">
-		<div class="foot_link">
-			<a href="#">关于我们</a>
-			<span>|</span>
-			<a href="#">联系我们</a>
-			<span>|</span>
-			<a href="#">招聘人才</a>
-			<span>|</span>
-			<a href="#">友情链接</a>		
-		</div>
-		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
-		<p>电话：010-****888    京ICP备*******8号</p>
-	</div>
+    <div class="footer" style="background-color: #3A3A3A; padding: 7em; color:burlywood; margin-bottom: 0;">
+        <hr style="border:0.5px solid gray">
+        <p>Copyright &copy; 2019 武汉 大白(手机)商城拥有对此网站的全部所有权
+            <a href="{% url 'user:index' %}" target="_blank" title="大白(●—●)商城" style="color: burlywood">大白商城 版权所有</a>
+        </p>
+    </div>
 	
 </body>
 </html>
