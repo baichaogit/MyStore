@@ -7,7 +7,7 @@ from .views import *
 
 
 
-#  user 应用的urls
+#  good 应用的urls
 
 urlpatterns = [
     url(r'^single/(?P<goods>\d+)$', single_views, name='single'),

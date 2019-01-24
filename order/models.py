@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from django.db import models
-from user.models import UserInfo
+from user.models import UserInfo, Address
 from good.models import GoodSKU
 
 ORDERSTATUS = (
@@ -31,13 +31,17 @@ class CartInfo(models.Model):
         db_table = 'cartinfo'
 
 
+
+
 class Order(models.Model):
     user = models.ForeignKey(UserInfo, on_delete=models.CASCADE)
+    cart = models.ForeignKey(CartInfo,on_delete=models.CASCADE,default=None)
     orderNo = models.CharField("订单号", max_length=200)
-    ads = models.CharField("收件人", max_length=200)
+    # ads = models.CharField("收件地址", max_length=200,default=None)
+    address = models.ForeignKey(Address, null=True,default=None)
     acot = models.CharField("总数", max_length=200)
     acounts = models.CharField("价格", max_length=200)
-    cals = models.TextField("orderdetail", null=True, blank=True)
+    cals = models.TextField("orderdetail", null=True, blank=True,default=None)
     orderStatus = models.IntegerField("订单状态", blank=True, choices=ORDERSTATUS, default='1')
 
     def __unicode__(self):

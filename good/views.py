@@ -8,6 +8,7 @@ from pylint.reporters import json
 from order.models import CartInfo
 from user.models import UserInfo
 from .models import *
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 
@@ -28,7 +29,6 @@ def single_views(request,goods):
             for sku in sku_list:
                 total_count += sku.ccount
             print('此人一共买了:',total_count,'件商品')
-
 
 
     # 所有 品牌实例
@@ -55,6 +55,9 @@ def single_views(request,goods):
 
 
 
+
+# -------------------------------
+
 # 品牌主页
 def products_views(request,brand_id):
     # 从request.session中获取登陆信息 判断用户是否登录????
@@ -71,8 +74,6 @@ def products_views(request,brand_id):
                 total_count += sku.ccount
             print('此人一共买了:',total_count,'件商品')
 
-
-
     # 用户点击了哪个品牌?
     brand_id = brand_id
 
@@ -82,15 +83,22 @@ def products_views(request,brand_id):
     # 所有 品牌实例展示
     brands = GoodBrand.objects.all()
 
-    # goods = GoodSKU.objects.filter(brand=brand_id)
-    goods = GoodSKU.objects.filter(brand=brand_id).values('goods').annotate(minprice=Min('price'))\
-        .values('goods', 'goods__name', 'minprice', 'goods__spu_img', 'goods__screen', 'goods__cpu', 'goods__point')
-    brand_name = GoodBrand.objects.filter(id=brand_id)[0]
-    brand_image = GoodBrand.objects.filter(id=brand_id)[0].image
-    print(brand_image)
 
-    # for good in goods:
-    #     print(good['goods__name'],good['minprice'])
+    goods_all = GoodSKU.objects.filter(brand=brand_id).values('goods').annotate(minprice=Min('price'))\
+        .values('goods', 'goods__name', 'minprice', 'goods__spu_img', 'goods__screen', 'goods__cpu', 'goods__point')
+
+    brand_name = GoodBrand.objects.filter(id=brand_id)[0]         # 品牌名
+    brand_image = GoodBrand.objects.filter(id=brand_id)[0].image  # 品牌图片
+
+    # # ------------ 分页显示 -----------
+    paginator = Paginator(goods_all, 4, allow_empty_first_page=True)  # 分页对象 (每一页显示4个商品对象)
+    page = request.GET.get('page')  # 得到 前端点击了哪个页码
+    try:
+        goods = paginator.page(page)
+    except PageNotAnInteger:
+        goods = paginator.page(1)
+    except EmptyPage:
+        goods = paginator.page(paginator.num_pages)
 
     return render(request,'products.html',locals())
 

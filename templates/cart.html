@@ -19,17 +19,17 @@
 			<div class="fr" >
 
 				<div class="login_btn fl" style="line-height: 50px">
-					<a href="{% url 'user:index' %}" >返回主页</a>
+					<a href="{% url 'user:index' %}" >返回主页 继续买</a>
 					<span>|</span>
 					<a href="{% url 'user:logout' %}" >退出登录</a>
 				</div>
 				<div class="user_link fl" style="line-height: 50px">
 					<span>|</span>
-					<a href="user_center_info.html" >用户中心</a>
+					<a href="{% url 'user:personal' %}" >用户中心</a>
+				</div>
+                <div class="user_link fl" style="line-height: 50px">
 					<span>|</span>
-					<a href="cart.html" >我的购物车</a>
-					<span>|</span>
-					<a href="user_center_order.html" >我的订单</a>
+					<a href="{% url 'order:cart' %}" >我的购物车</a>
 				</div>
 			</div>
 		</div>
@@ -55,24 +55,24 @@
 	</ul>
 
 
-     <form method="post" action="#">
+     <form method="post" action="{% url 'order:jiesuan' %}">
 
     {% for sku in sku_list %}
 
 	<ul class="cart_list_td clearfix" style="">
 		<li class="col01"><input type="checkbox" name="sku_ids" value="{{ sku.id }}" checked ></li>
 		<li class="col02"><img src="/{{ sku.good.goods.spu_img }}" ></li>
-		<li class="col03">{{ sku.good.goods.name }}<br><em>{{ sku.id }}</em></li>
+		<li class="col03">{{ sku.good.goods.name }}<br><em>产品ID: {{ sku.good.id }}</em></li>
 		<li class="col04">{{ sku.good.get_neicun_display }}</li>
-		<li class="col05">{{ sku.good.price }}</li>
+		<li class="col05">{{ sku.good.price }}元</li>
 		<li class="col06">
 			<div class="num_add">
 				<a href="javascript:;" class="add fl">+</a>
-				<input type="text" sku_id="{{ sku.id }}" class="num_show fl" value="{{ sku.ccount }}">
+				<input type="text" sku_id="{{ sku.good.id }}" class="num_show fl" value="{{ sku.ccount }}">
 				<a href="javascript:;" class="minus fl">-</a>	
 			</div>
 		</li>
-		<li class="col07">{{ sku.amount }}</li>
+		<li class="col07">{{ sku.amount }}元</li>
 		<li class="col08"><a href="javascript:;">删除</a></li>
 	</ul>
 
@@ -86,7 +86,9 @@
 		<li class="col01"><input type="checkbox" name="" checked=""></li>
 		<li class="col02">全选</li>
 		<li class="col03">合计(不含运费)：<span>¥</span><em>{{ total_price }}</em><br>共计<b>{{ total_count }}</b>件商品</li>
-		<li class="col04"><input type="submit" value="去结算"></li>
+		<li class="col04">
+            <input type="submit" value="去结算" style="font-size:20px;width: 5em;height: 3.5em;background-color:lightcoral">
+        </li>
 	</ul>
 
     </form>
@@ -325,16 +327,21 @@
     $('.cart_list_td').children('.col08').children('a').click(function () {
         // 获取对应商品的id
         sku_id = $(this).parents('ul').find('.num_show').attr('sku_id');
+        console.log('我要删除的是'+sku_id);
         csrf = $('input[name="csrfmiddlewaretoken"]').val();
         // 组织参数
         params = {'sku_id':sku_id, 'csrfmiddlewaretoken':csrf};
         // 获取商品所在的ul元素
         sku_ul = $(this).parents('ul');
-        // 发起ajax post请求， 访问/cart/delete, 传递参数:sku_id
-        $.post('/cart/delete', params, function (data) {
-            if (data.res == 3){
+        console.log('我要删除的是--ul-'+sku_ul);
+
+        // 发起ajax post请求， 访问/order/delete, 传递参数:sku_id
+        $.post('/order/delete/', params, function (data) {
+            console.log('post 删除请求开始');
+            if (data.res == 'ok'){
                 // 删除成功，异常页面上商品所在的ul元素
                 sku_ul.remove();
+                document.location.reload();
                 // 获取sku_ul中商品的选中状态
                 is_checked = sku_ul.find(':checkbox').prop('checked');
                 if (is_checked){
@@ -350,6 +357,37 @@
         })
     })
 
+
+
+
+    // 删除购物车中的记录
+    $('.cart_list_td').children('.col08').children('a').click(function () {
+        // 获取对应商品的id
+        sku_id = $(this).parents('ul').find('.num_show').attr('sku_id');
+        csrf = $('input[name="csrfmiddlewaretoken"]').val();
+        // 组织参数
+        params = {'sku_id':sku_id, 'csrfmiddlewaretoken':csrf};
+        // 获取商品所在的ul元素
+        sku_ul = $(this).parents('ul');
+        // 发起ajax post请求， 访问/order/delete, 传递参数:sku_id
+        $.post('/order/delete', params, function (data) {
+            if (data.res == 'ok'){
+                // 删除成功，异常页面上商品所在的ul元素
+                sku_ul.remove();
+                // 获取sku_ul中商品的选中状态
+                is_checked = sku_ul.find(':checkbox').prop('checked');
+                if (is_checked){
+                    // 更新页面信息
+                    update_page_info()
+                }
+                // 重新设置页面上购物车中商品的总件数
+                $('.total_count').children('em').text(data.total_count)
+            }
+            else{
+                alert(data.res)
+            }
+        })
+    })
 
 
 

@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>我的地址</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+</head>
+<body>
+	<div class="header_con">
+
+
+	<div class="header_con" style="background-color:#3A3A3A; color: white; height: 50px; font-size: 15px">
+		<div class="header" >
+			<div class="welcome fl" style="line-height: 50px">大白手机商城  感谢您的支持!!</div>
+			<div class="fr" >
+
+				<div class="login_btn fl" style="line-height: 50px">
+					<a href="{% url 'user:index' %}" >返回主页 继续买</a>
+					<span>|</span>
+					<a href="{% url 'user:logout' %}" >退出登录</a>
+				</div>
+				<div class="user_link fl" style="line-height: 50px">
+					<span>|</span>
+					<a href="{% url 'user:personal' %}" >用户中心</a>
+				</div>
+                <div class="user_link fl" style="line-height: 50px">
+					<span>|</span>
+					<a href="{% url 'order:cart' %}" >我的购物车</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="search_bar clearfix">
+		<a href="index.html" class="logo fl"><img src=""></a>
+		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;用户中心</div>
+
+	</div>
+
+	<div class="main_con clearfix">
+
+		<div class="left_menu_con clearfix">
+			<h3>用户中心</h3>
+			<ul>
+				<li><a href="{% url 'user:personal' %}">· 个人信息</a></li>
+				<li><a href="{% url 'order:all_order' %}">· 全部订单</a></li>
+				<li><a href="{% url 'user:address' %}" class="active">· 地址管理</a></li>
+			</ul>
+		</div>
+
+        <!-----------------  当前 默认地址  ----------------------->
+		<div class="right_content clearfix" >
+				<h3 class="common_title2">我的收货地址</h3>
+
+
+
+
+				<div class="site_con" style="border: 0.5px solid lightblue">
+					<dl>
+						<dt>当前默认地址：</dt>
+						<dd>{{ default_addr.addr }} （{{ default_addr.receiver }} 收） {{ default_addr.phone }}</dd>
+					</dl>
+				</div>
+
+
+
+
+
+        <!------------------- 显示 其他 所有地址 ---------------------->
+                        <h3 class="common_title2">其他:</h3>
+        <table style="border: 0.5px solid gray">
+            <tr style="text-align: center;background-color: #5bc0de">
+                <td class="">收件人</td>
+                <td class="">地址</td>
+                <td class="">邮编</td>
+                <td class="">电话</td>
+                <td class="">操作</td>
+                <td>更换默认</td>
+            </tr>
+
+            {% for addr in address_list %}
+            <tr>
+                <td class="user_name">{{ addr.receiver }}</td>
+                <td class="address">{{ addr.addr }}</td>
+                <td class="zip_code">{{ addr.zip_code }}</td>
+                <td class="tel">{{ addr.phone }}</td>
+                <td class="handle">
+{#                    <a href="/user/update_addr/?id={{ addr.id }}">修改</a> |#}
+                    <a href="#">修改</a> |
+                    <a href="/user/delete_addr/?id={{ addr.id }}">删除</a>
+                </td>
+                <td><a href="/user/default_addr/?id={{ addr.id }}">设为默认</a></td>
+            </tr>
+            {% endfor %}
+
+
+
+        </table>
+
+        <br><br>
+
+
+            <!----------------------添加新地址------------------------------>
+
+				<h3 class="common_title2">添加新地址</h3>
+				<div class="site_con" style="border: 0.5px solid lightblue">
+					<form action="{% url 'user:address' %}" method="post">
+                        {% csrf_token %}
+						<div class="form_group">
+							<label>收件人：</label>
+							<input type="text" name="receiver">
+						</div>
+						<div class="form_group form_group2">
+							<label>详细地址：</label>
+							<textarea class="site_area" name="addr"></textarea>
+						</div>
+						<div class="form_group">
+							<label>邮编：</label>
+							<input type="text" name="zip_code">
+						</div>
+						<div class="form_group">
+							<label>手机：</label>
+							<input type="text" name="phone">
+						</div>
+
+						<input type="submit" name="" value="提交" class="info_submit" style="display: inline-block">
+
+					</form>
+				</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+	<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>		
+		</div>
+		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+	
+</body>
+</html>
+
+
+
+
+
+
+<style>
+    table{
+        border-collapse: collapse;
+        width: 980px;
+
+    }
+
+    td{
+        text-align: center;
+        padding: 0;
+        height: 2.5em;
+        border: 0.5px solid lightskyblue;
+    }
+</style>
+
+<script>
+    {% if res %}
+    alert('{{ res }}');
+    {% endif %}
+
+</script>

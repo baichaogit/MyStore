@@ -1,5 +1,7 @@
 import random
 import re
+from audioop import reverse
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Min
 from django.shortcuts import render
@@ -104,10 +106,153 @@ def personal_views(request):
     if 'user_id' in request.session and 'user_name' in request.session:
         id = request.session.get('user_id')
         user = UserInfo.objects.filter(id=id).first()
+        return render(request,'user_center_info.html',locals())
 
-        return render(request,'user_center_info.html')
     else:
         return render(request, 'login.html', {"msg": "请登陆后 再进入用户中心"})
+
+
+
+# 管理地址 页
+def address_views(request):
+    if request.method == 'GET':
+        # 从request.session中获取登陆信息 判断用户是否登录????
+        if 'user_id' in request.session and 'user_name' in request.session:
+            id = request.session.get('user_id')
+            user = UserInfo.objects.filter(id=id).first()
+            address_list = Address.objects.filter(user=user)
+            address_list = list(address_list) # 列表化
+            for addr in address_list:
+                if addr.is_default:
+                    default_addr = addr # 找到了默认地址
+                    address_list.remove(addr)
+
+            return render(request,'user_address.html',locals())
+
+        else:
+            return render(request,'login.html',{"msg": "请登陆后 再进入用户中心"})
+
+
+    # 添加 新地址
+    if request.method == 'POST':
+        print('++++++用户在添加地址++++++++++')
+        id = request.session.get('user_id')
+        user = UserInfo.objects.filter(id=id).first()
+        # # 接收数据
+        receiver = request.POST.get('receiver')  # 收件人
+        addr = request.POST.get('addr')
+        zip_code = request.POST.get('zip_code')
+        phone = request.POST.get('phone')
+
+        if not all([receiver, addr, zip_code, phone]):
+            print('*****数据不完整***********')
+            return render(request, 'user_address.html', {'res': '添加失败, 数据不完整'})
+
+        # 校验手机号
+        if not re.match(r'^1[3|4|5|7|8][0-9]{9}$', phone):
+            return render(request, 'user_address.html', {'res':'手机格式不正确'})
+        # 拿到 默认地址
+        try:
+            address = Address.objects.get(user=user, is_default=True)
+        except Address.DoesNotExist:
+            # 不存在默认收货地址
+            address = None
+        if address:
+            is_default = False
+        else:
+            is_default = True
+        # 添加 新地址
+        Address.objects.create(user=user, receiver=receiver,
+                               addr=addr, zip_code=zip_code,
+                               phone=phone, is_default=is_default)
+        return redirect('/user/address')  # 重定向回去
+
+
+
+
+
+
+# 更改 默认地址
+def default_addr_views(request):
+    # 谁在改默认地址
+    user_id = request.session.get('user_id')
+    user = UserInfo.objects.filter(id = user_id)[0]
+    # 接收前端的数据   用户要改哪一个地址
+    new_default_id = request.GET.get('id')
+    # 找到以前的 默认地址
+    try:
+        old_addr = Address.objects.get(user=user, is_default=True)
+        old_addr.is_default = False
+        old_addr.save()
+    except Address.DoesNotExist:
+        # 不存在默认收货地址
+        old_addr = None
+        return render(request, 'user_address.html', {'res': '操作失败'})
+
+
+    new_addr = Address.objects.get(user=user, id=new_default_id)
+    new_addr.is_default = True
+    new_addr.save()
+    return redirect('/user/address')  # 重定向回去
+
+
+
+
+
+
+# 删除 地址
+def delete_addr_views(request):
+    # 谁在删除地址
+    user_id = request.session.get('user_id')
+    user = UserInfo.objects.filter(id = user_id)[0]
+    # 接收前端的数据   用户要删哪一个地址
+    delete_id = request.GET.get('id')
+    # 找到这个地址
+    try:
+        delete_addr = Address.objects.get(user=user, id=delete_id).delete()
+        return redirect('/user/address')  # 重定向回去
+    except Address.DoesNotExist:
+        # 不存在默认收货地址
+        old_addr = None
+        return render(request, 'user_address.html', {'res': '操作失败'})
+
+
+# 修改 地址
+def update_addr_views(request):
+    # 谁在删除地址
+    user_id = request.session.get('user_id')
+    user = UserInfo.objects.filter(id = user_id)[0]
+    # 接收前端的数据   用户要删哪一个地址
+    update_id = request.GET.get('id')
+    # 找到这个地址
+    try:
+        update_addr = Address.objects.get(user=user, id=update_id).delete()
+        return redirect('/user/address')  # 重定向回去
+    except Address.DoesNotExist:
+        # 不存在默认收货地址
+        old_addr = None
+        return render(request, 'user_address.html', {'res': '操作失败'})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

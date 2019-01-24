@@ -3,8 +3,8 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<title>天天生鲜-用户中心</title>
-	<link rel="stylesheet" type="text/css" href="css/reset.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
 </head>
 <body>
 
@@ -15,17 +15,17 @@
 			<div class="fr" >
 
 				<div class="login_btn fl" style="line-height: 50px">
-					<a href="{% url 'user:index' %}" >返回主页</a>
+					<a href="{% url 'user:index' %}" >返回主页 继续买</a>
 					<span>|</span>
 					<a href="{% url 'user:logout' %}" >退出登录</a>
 				</div>
 				<div class="user_link fl" style="line-height: 50px">
 					<span>|</span>
-					<a href="user_center_info.html" >用户中心</a>
+					<a href="{% url 'user:personal' %}" >用户中心</a>
+				</div>
+                <div class="user_link fl" style="line-height: 50px">
 					<span>|</span>
-					<a href="cart.html" >我的购物车</a>
-					<span>|</span>
-					<a href="user_center_order.html" >我的订单</a>
+					<a href="{% url 'order:cart' %}" >我的购物车</a>
 				</div>
 			</div>
 		</div>
@@ -42,9 +42,9 @@
 		<div class="left_menu_con clearfix">
 			<h3>用户中心</h3>
 			<ul>
-				<li><a href="user_center_info.html">· 个人信息</a></li>
-{#				<li><a href="user_center_order.html" class="active">· 全部订单</a></li>#}
-				<li><a href="user_center_site.html">· 收货地址</a></li>
+				<li><a href="{% url 'user:personal' %}" >· 个人信息</a></li>
+				<li><a href="{% url 'order:all_order' %}" class="active">· 全部订单</a></li>
+				<li><a href="{% url 'user:address' %}" >· 地址管理</a></li>
 			</ul>
 		</div>
 		<div class="right_content clearfix">
@@ -119,6 +119,7 @@
 				</div>
 		</div>
 	</div>
+
 
 
 

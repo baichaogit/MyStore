@@ -115,6 +115,67 @@
                     {% endfor %}
             <!-------------------->
 
+    <hr style="clear: both; border: 0.5px solid silver">
+       <!-------------- 页 码 ----------------------->
+  <div class="pagination" style=" margin-left: 28em; border-bottom: 0.5px solid grey ">
+    <span class="step-links" >
+        {% if goods.has_previous %}
+            <a href="?page={{ goods.previous_page_number }}">上一页  &ensp; </a>
+        {% endif %}
+
+        <span class="current">
+            第 -{{ goods.number }}- 页  |  共{{ goods.paginator.num_pages }}页
+        </span>
+
+        {% if goods.has_next %}
+            <a href="?page={{ goods.next_page_number }}">  &ensp; 下一页</a>
+        {% endif %}
+    </span>
+    </div>
+
+
+
+        <!--------------// 页 码 // 优化 //-------------------->
+{#   <div class="pagination" style=" margin-left: 28em ">#}
+{##}
+{#   <ul class="pagination">#}
+{##}
+{#   <!--- 上一页箭头--------->#}
+{#   {% if goods.has_previous %}#}
+{#       <li>#}
+{#       <a href="?page={{ goods.previous_page_number }}" aria-label="Previous"></a>#}
+{#       <span aria-hidden="true">&laquo;</span>#}
+{#       </li>#}
+{#   {% endif %}#}
+{##}
+{#   <!------- 导航页码 ------->#}
+{#   {% for pg in goods.previous_page_number %}#}
+{#   {% if goods.number == pg %}  <!---当前页 高亮显示------>#}
+{#       <li class="active"><a href="?page={{ pg }}">{{ pg }}</a>></li>#}
+{#   {% else %}  <!---- 其他页 ----->#}
+{#       <li><a href="?page={{ pg }}">{{ pg }}</a></li>#}
+{#   {% endif %}#}
+{#   {% endfor %}#}
+{##}
+{#   <!-------如果有下一页.. 显示箭头--------->#}
+{#   {% if goods.has_next %}#}
+{#       <li>#}
+{#           <a href="?page={{ goods.next_page_number }}" aria-label="Next">#}
+{#               <span aria-hidden="true">&raquo;</span>>#}
+{#           </a>#}
+{#       </li>#}
+{#   {% endif %}#}
+{##}
+{##}
+{##}
+{##}
+{#    </div>#}
+
+
+
+
+
+
 					<div class="clearfix"> </div>
 				</div>
 			</div>

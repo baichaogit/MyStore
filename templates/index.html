@@ -69,7 +69,7 @@
 
 		<div class="product_list_header">
 			<a href="{% url 'order:cart' %}"><div style="cursor: pointer;">
-				<span class="glyphicon glyphicon-shopping-cart my-cart-icon"><li class="badge badge-notify my-cart-badge" style="font-size: 1.2em;color:greenyellow">
+				<span class="glyphicon glyphicon-shopping-cart my-cart-icon"><li class="badge badge-notify my-cart-badge" style="font-size: 1em;color:greenyellow">
                     {{ total_count }}</li></span>
 
 			</div></a>
@@ -212,7 +212,8 @@
 
             <div class="w3l_banner_nav_right_banner9 w3l_banner_nav_right_banner_pet"
                  style="background-image: url('/{{add1.image}}')">
-                <a href="{% url 'good:single' add1.goods.id %}">{{ add1.title }} | <em style="font-size: 0.5em">了解一下</em></a>
+{#                <a href="{% url 'good:single' add1.goods.id %}">{{ add1.title }} | <em style="font-size: 0.5em">了解一下</em></a>#}
+                <a href="/good/single/?goods={{ add1.goods.id }}">{{ add1.title }} | <em style="font-size: 0.5em">了解一下</em></a>
 			</div>
                 <!------------------------------广告 大图--------------------------->
 

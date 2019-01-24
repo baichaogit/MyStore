@@ -21,29 +21,21 @@
 			<div class="fr" >
 
 				<div class="login_btn fl" style="line-height: 50px">
-					<a href="{% url 'user:index' %}" >返回主页</a>
+					<a href="{% url 'user:index' %}" >返回主页 继续买</a>
 					<span>|</span>
 					<a href="{% url 'user:logout' %}" >退出登录</a>
 				</div>
 				<div class="user_link fl" style="line-height: 50px">
 					<span>|</span>
-					<a href="user_center_info.html" >用户中心</a>
+					<a href="{% url 'user:personal' %}" >用户中心</a>
+				</div>
+                <div class="user_link fl" style="line-height: 50px">
 					<span>|</span>
-					<a href="cart.html" >我的购物车</a>
-					<span>|</span>
-					<a href="user_center_order.html" >我的订单</a>
+					<a href="{% url 'order:cart' %}" >我的购物车</a>
 				</div>
 			</div>
 		</div>
 	</div>
-
-
-
-
-
-
-
-
 
 
 
@@ -57,9 +49,9 @@
 		<div class="left_menu_con clearfix">
 			<h3>用户中心</h3>
 			<ul>
-				<li><a href="user_center_info.html" class="active">· 个人信息</a></li>
-{#				<li><a href="user_center_order.html">· 全部订单</a></li>#}
-				<li><a href="user_center_site.html">· 收货地址</a></li>
+				<li><a href="{% url 'user:personal' %}" class="active">· 个人信息</a></li>
+				<li><a href="{% url 'order:all_order' %}">· 全部订单</a></li>
+				<li><a href="{% url 'user:address' %}" >· 地址管理</a></li>
 			</ul>
 		</div>
 
@@ -69,14 +61,18 @@
 
 		<div class="right_content clearfix">
 				<div class="info_con clearfix">
-				<h3 class="common_title2" style="background-color: wheat">基本信息</h3>
-						<ul class="user_info_list" style="background-color: wheat">
-							<li><span>用户名：</span>18210569700</li>
-							<li><span>联系方式：</span>18210569700</li>
-							<li><span>联系地址：</span>北京市昌平区</li>			
+				<h3 class="common_title2" >基本信息</h3>
+						<ul class="user_info_list" style="border: 0.5px solid lightblue">
+							<li><span>用户名：</span>{{ user.name }}</li>
+							<li><span>邮箱：</span>{{ user.email }}</li>
+{#							<li><span>联系地址：</span></li>			#}
 						</ul>
 				</div>
-				
+
+
+
+<!---------------------浏 览 记 录------------------------------------------------>
+
 				<h3 class="common_title2">最近浏览</h3>
 				<div class="has_view_list">
 					<ul class="goods_type_list clearfix">
